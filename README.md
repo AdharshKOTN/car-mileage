@@ -1,90 +1,83 @@
 # Tesla Fleet Tracker (OAuth 2.0 Integration & Vehicle Data Access)
 
-> A personal project designed to securely access and analyze Tesla vehicle data using the official Fleet API, with a focus on clean OAuth 2.0 flow, data visibility, and scalable architecture.
+> A personal project to securely access and analyze Tesla vehicle data using the official Fleet API, with a focus on OAuth 2.0 flows, authentication, and data architecture.
 
 ---
 
 ## 🚀 Overview
 
-This project is an in-progress **Tesla Fleet API integration**, developed as a way to better understand vehicle telemetry, battery status, and mileage logs through secure OAuth 2.0 access. It uses a clean Flask-based backend flow to authenticate with Tesla's OAuth server and retrieve API access tokens for accessing live fleet data.
-
-I'm building this as part of a deeper goal: to **become technically self-sufficient**, break down complex systems, and deploy automation that reflects both personal curiosity and professional rigor.
+Tesla Fleet Tracker is a self-hosted platform that integrates with Tesla’s Fleet API to retrieve live vehicle data (such as odometer readings, battery level, and state) using a secure authentication process. It runs on a Raspberry Pi server and is designed to be modular, scalable, and extensible for home automation or logging use cases.
 
 ---
 
-## 🎯 Objectives
+## 🎯 Project Goals
 
-- ✅ Build a step-by-step OAuth 2.0 flow using Tesla’s Fleet API
-- ✅ Authenticate using client credentials and secure redirect flow
-- ✅ Retrieve access and refresh tokens from Tesla servers
-- ✅ Lay the groundwork to log vehicle data like:
-  - Mileage (odometer)
-  - Battery level
-  - Vehicle state
-- 🔄 Use this as a base for further automation, scheduling, and logging on a local home server
+- Implement Tesla’s OAuth 2.0 flow using Flask and Python
+- Retrieve and securely store access/refresh tokens
+- Authenticate as a registered partner application
+- Query the Fleet API for real-time vehicle data
+- Design for eventual dashboard visualization and scheduled logging
 
 ---
 
 ## 🛠 Tech Stack
 
-| Tool           | Purpose                                   |
-|----------------|-------------------------------------------|
-| `Flask`        | Lightweight backend for redirect & callback handling |
-| `requests`     | Making HTTP requests to Tesla API         |
-| `python-dotenv`| Manage environment variables cleanly       |
-| `Tesla OAuth`  | Secure authentication and token exchange   |
-| `bash`         | Supporting scripts for automation and setup |
-| *(Future)*     | SQLite or CSV logging for mileage snapshots |
-
----
-
-## 🧠 Why This Project Matters to Me
-
-This project isn’t just about getting a token and hitting an API. It’s about:
-- **Building from the ground up**
-- **Understanding every step in a secure system**
-- **Turning documentation into capability**
-- **Owning my learning through full-stack responsibility**
-
-I’m driven by clarity and the desire to work on systems that are reliable, reusable, and well understood — even when they’re hard.
+| Tool           | Purpose                                           |
+|----------------|---------------------------------------------------|
+| `Flask`        | Handles login, callback, and local server logic  |
+| `requests`     | Performs HTTPS API calls                         |
+| `Tesla OAuth`  | Supports secure token exchange                   |
+| `bash`         | Assists with setup and token automation          |
+| `Cloudflare`   | Tunnel to securely expose the local server       |
+| *(Planned)*    | SQLite or CSV for vehicle log persistence        |
 
 ---
 
 ## 🔐 OAuth Flow Summary
 
-1. **User clicks login**
-2. Redirected to Tesla’s `authorize` page
-3. Tesla redirects back with a `code`
-4. Flask server exchanges that code for:
-   - `access_token`
-   - `refresh_token`
-5. Token is used to query Tesla Fleet API endpoints
+1. User starts login on local Flask server
+2. Redirected to Tesla's OAuth authorize endpoint
+3. Tesla redirects back with a one-time code
+4. Flask server exchanges code for access and refresh tokens
+5. Server makes authorized API requests using the token
 
 ---
 
-## 🔄 Example Endpoints
+## 📦 Fleet API Endpoints
 
-- `GET /login` → Redirect to Tesla login
-- `GET /callback` → Handle authorization code
-- `GET /vehicle_data` (in progress) → Log or display odometer, battery level
-
----
-
-## 📈 What's Next
-
-- Add secure storage for tokens
-- Add automatic token refresh flow
-- Expose vehicle data in a lightweight dashboard or JSON API
-- Log data periodically using scheduler or cron on my Raspberry Pi server
+| Endpoint                 | Description                         |
+|--------------------------|-------------------------------------|
+| `/api/1/vehicles`        | Returns list of vehicles            |
+| `/api/1/vehicle_data`    | Returns vehicle telemetry (planned) |
+| `/api/1/partner_accounts`| Registers app with Tesla backend    |
 
 ---
 
-## 🤝 Collaboration & Feedback
+## 📁 Documentation Structure
 
-I’m open to feedback and ideas! Whether you’ve used Tesla’s Fleet API or want to nerd out about secure token handling, hit me up.
+See the [`/docs`](./) directory for:
+
+- `architecture.md` — App/server structure
+- `authentication.md` — Token flow & client secrets
+- `partner-registration.md` — PEM key setup and Tesla domain linking
+- `vehicle-api.md` — Vehicle data endpoints & usage
+- `development-log.md` — Progress notes & future plans
 
 ---
 
-## 💬 Final Note
+## 🔍 Status
 
-This project is a reflection of how I work: **start with understanding, focus on flow, and build with purpose**. I'm passionate about blending backend systems with real-world devices, and this is just one step in a much larger journey toward building smart, responsive tools that serve both people and planet.
+This project is under active development and infrastructure setup. 
+Token exchange and initial endpoint testing are functional. Partner registration and vehicle telemetry access in progress.
+
+---
+
+## 🤝 Feedback & Contributions
+
+While this is a personal learning project, insights, suggestions, and shared experience with Tesla’s APIs are welcome.
+
+---
+
+## 🌱 About This Project
+
+Tesla Fleet Tracker reflects a hands-on approach to systems understanding and secure integration. It represents a growing skillset in API work, backend engineering, and infrastructure visibility.
